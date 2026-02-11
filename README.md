@@ -41,7 +41,9 @@ Open your `package.json` and add the following to the `scripts` object:
 
 ### 2. Move scripts folder from repository to the root of the frontend project
 
-### 3. Usage
+### 3. Run `./ignore-scripts-folder-for-git-tracking.sh` to ensure the `scripts` directory is not tracked or pushed to the remote repository
+
+### 4. Usage
 
 ####  TO RUN CHECKS:
 
