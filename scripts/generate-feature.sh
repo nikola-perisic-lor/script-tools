@@ -28,9 +28,9 @@ fi
 
 INPUT=$1
 
-ENTITY_KEBAB=$(echo "$INPUT" | sed -r 's/([a-z0-9])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]')
-ENTITY_PASCAL=$(echo "$ENTITY_KEBAB" | sed -r 's/(^|-)([a-z])/\U\2/g')
-ENTITY_UPPER=$(echo "$ENTITY_KEBAB" | tr '-' '_' | tr '[:upper:]' '[:lower:]' | tr '[:lower:]' '[:upper:]')
+ENTITY_KEBAB=$(echo "$INPUT" | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g' | tr '[:upper:]' '[:lower:]')
+ENTITY_PASCAL=$(echo "$ENTITY_KEBAB" | perl -pe 's/(^|-)(\w)/\U$2/g')
+ENTITY_UPPER=$(echo "$ENTITY_KEBAB" | tr '-' '_' | tr '[:lower:]' '[:upper:]')
 
 BASE_DIR="$FRONTEND_SRC/features/$ENTITY_KEBAB"
 
