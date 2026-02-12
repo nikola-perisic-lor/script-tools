@@ -5,11 +5,24 @@
 
 # Usage and example: ./generate-feature.sh MobilityRate
 
-# Date: 11.02.2026.
+# Date: 12.02.2026.
 ##############################################################################
 
 if [ -z "$1" ]; then
     echo "Error: You need to pass argument for entity name"
+    exit 1
+fi
+
+GIT_ROOT=$(git rev-parse --show-toplevel 2>/dev/null)
+if [ -z "$GIT_ROOT" ]; then
+    echo "Error: Not a git repository."
+    exit 1
+fi
+
+FRONTEND_SRC="$GIT_ROOT/frontend/lor-dta-mobility-web/src"
+
+if [ ! -d "$FRONTEND_SRC" ]; then
+    echo "Error: Could not find frontend src directory at: $FRONTEND_SRC"
     exit 1
 fi
 
@@ -19,9 +32,10 @@ ENTITY_KEBAB=$(echo "$INPUT" | sed -r 's/([a-z0-9])([A-Z])/\1-\2/g' | tr '[:uppe
 ENTITY_PASCAL=$(echo "$ENTITY_KEBAB" | sed -r 's/(^|-)([a-z])/\U\2/g')
 ENTITY_UPPER=$(echo "$ENTITY_KEBAB" | tr '-' '_' | tr '[:upper:]' '[:lower:]' | tr '[:lower:]' '[:upper:]')
 
-BASE_DIR="./src/features/$ENTITY_KEBAB"
+BASE_DIR="$FRONTEND_SRC/features/$ENTITY_KEBAB"
 
 echo "Creating structure for: $ENTITY_KEBAB ($ENTITY_PASCAL)..."
+echo "Target directory: $BASE_DIR"
 
 mkdir -p "$BASE_DIR"/{columns,components,constants,hooks,pages,types}
 
