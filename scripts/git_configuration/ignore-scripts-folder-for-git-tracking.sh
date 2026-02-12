@@ -6,14 +6,22 @@
 
 # Usage: ./ignore-scripts-folder-for-git-tracking.sh
 
-# Date: 11.02.2026.
-
+# Date: 12.02.2026.
 ##############################################################################
+
+ROOT_DIR=$(git rev-parse --show-toplevel 2>/dev/null)
+
+if [ -z "$ROOT_DIR" ]; then
+    echo "Error: Please be inside a git repository."
+    exit 1
+fi
+
+cd "$ROOT_DIR"
 
 TARGET="frontend/lor-dta-mobility-web/scripts/"
 
 if [ ! -d ".git" ]; then
-    echo "Error: Please be in a root of the project where .git folder exists"
+    echo "Error: .git folder not found at $ROOT_DIR"
     exit 1
 fi
 
